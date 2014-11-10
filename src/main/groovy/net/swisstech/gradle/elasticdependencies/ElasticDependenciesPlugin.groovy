@@ -17,9 +17,9 @@ class ElasticDependenciesPlugin implements Plugin<Project> {
 
 	void apply(Project project) {
 		project.dependencies.metaClass.elastic = { String projectName, String projectVersion = '+', String projectGroup = null ->
+			String notation = ":${projectName}"
 			def dependency = null
 			try {
-				String notation = ":${projectName}"
 				dependency = project.project(notation)
 			}
 			catch (UnknownProjectException e) {
