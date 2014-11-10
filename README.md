@@ -34,7 +34,7 @@ gradle 2.1 or higher
 
 ```groovy
 plugins {
-	id 'net.swisstech.gradle-elasticdependencies'
+	id 'net.swisstech.elasticdependencies'
 }
 ```
 
@@ -57,7 +57,8 @@ usage
 =====
 
 ```groovy
-apply plugin: 'elasticdependencies'
+// only if not already added via the 'plugins' closure
+apply plugin: 'net.swisstech.elasticdependencies'
 
 dependencies {
     // if you run just gradle, and if there's an 'other-module' available,
