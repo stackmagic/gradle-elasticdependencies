@@ -79,3 +79,4 @@ todo
 ====
 
 * TODO add more 'elastic' methods for other ways of referencing projects and/or supplying the group/version
+* TODO integration/verification tests with an actual gradle instance loading a project and us verifying everything. see if gradle's own integration tests are any help to making this happen in a clever way with little effort
