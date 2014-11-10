@@ -28,7 +28,7 @@ class ElasticDependenciesPlugin implements Plugin<Project> {
 					group = projectGroup;
 				}
 
-				String notation = "${group}:${projectName}:${projectVersion}"
+				notation = "${group}:${projectName}:${projectVersion}"
 				LOG.debug("ElasticDependenciesPlugin: ${project.name}: Project with name ${projectName} not found, using external dependency ${notation}")
 				dependency = project.dependencies.create(notation)
 			}
