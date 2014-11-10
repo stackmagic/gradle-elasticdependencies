@@ -26,20 +26,25 @@ related work
 
 * [elastic-deps](https://github.com/pniederw/elastic-deps): elastic-deps by Peter Niederwieser
 
-downloading
-===========
-
-gradle 2.1 or higher
---------------------
+downloading/usage (gradle 2.1 or higher)
+========================================
 
 ```groovy
 plugins {
-	id 'net.swisstech.elasticdependencies'
+  id 'net.swisstech.elasticdependencies'
+}
+
+dependencies {
+  // if you run just gradle, and if there's an 'other-module' available,
+  // this will create a ProjectDependency.
+  // if this 'other-module' isn't available, or if you run "gradle -u"
+  // this will create an ExternalDependency
+  compile elastic('other-module')
 }
 ```
 
-gradle-1.7 or higher
---------------------
+downloading/usage (gradle-1.7 or higher)
+========================================
 
 ```groovy
 buildscript {
@@ -51,13 +56,7 @@ buildscript {
         compile 'net.swisstech:gradle-elasticdependencies:+'
     }
 }
-```
 
-usage
-=====
-
-```groovy
-// only if not already added via the 'plugins' closure
 apply plugin: 'net.swisstech.elasticdependencies'
 
 dependencies {
