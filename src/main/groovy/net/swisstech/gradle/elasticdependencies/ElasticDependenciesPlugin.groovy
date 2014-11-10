@@ -33,7 +33,7 @@ class ElasticDependenciesPlugin implements Plugin<Project> {
 				dependency = project.dependencies.create(notation)
 			}
 
-			LOG.debug("ElasticDependenciesPlugin: ${project.name} Resolved projectName=${projectName} fullNotation=${fullNotation} into ${dependency}")
+			LOG.debug("ElasticDependenciesPlugin: ${project.name} Resolved projectName=${projectName} notation=${notation} into ${dependency}")
 			return dependency
 		}
 	}
