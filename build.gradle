@@ -1,0 +1,106 @@
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+
+description = 'Gradle plugin to allow resolving dependencies into project-dependencies in a multimodule build or, if no matching modules are found, into external dependencies (which allows using the -u switch in a module, assuming all other referenced modules are available from your repositories)'
+group       = 'net.swisstech'
+version     = '1.0.0'
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+// normal repositories and dependencies
+repositories {
+	jcenter()
+	mavenLocal()
+	mavenCentral()
+}
+
+dependencies {
+	compile gradleApi()
+	compile localGroovy()
+
+	compile 'net.swisstech:swissarmyknife:1.1.1'
+}
+
+// testing
+// DO NOT use testng or else the groovy test cases won't be executed
+// TODO use testng for groovy tests?
+// test.useTestNG()
+
+// TODO use eclipse-enhancer once it is published
+eclipseProject.doLast {
+	sourceSets*.java.srcDirs*.each      { it.mkdirs() }
+	sourceSets*.groovy.srcDirs*.each    { it.mkdirs() ; sourceSets.main.java.srcDirs += it }
+	sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+}
+// END TODO
+
+// task to generate wrapper
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.1'
+}
+
+// source-code jar
+task sourceJar(type: Jar) {
+	from sourceSets.main.allSource
+}
+
+// bintray uses the publication, also includes source jar
+apply plugin: 'maven-publish'
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+			artifact sourceJar {
+				classifier 'sources'
+			}
+		}
+	}
+}
+
+// uploading to jcenter
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:0.6'
+	}
+}
+
+def getProperty = { String name ->
+	try {
+		return project[name]
+	}
+	catch (MissingPropertyException e) {
+		println "!!! property ${name} is not available"
+		return ""
+	}
+}
+
+apply plugin: 'com.jfrog.bintray'
+bintray {
+	// key and user must be in your ~/.gradle/gradle.properties
+	key          = getProperty('swisstech_bintray_apikey')
+	user         = getProperty('swisstech_bintray_user')
+	dryRun       = false
+	publish      = true
+	publications = [ 'mavenJava' ]
+	pkg {
+		repo            = 'maven'
+		name            = project.name
+		desc            = project.description
+		licenses        = [ 'Apache-2.0' ]
+		websiteUrl      = 'https://github.com/stackmagic/gradle-dropwizard'
+		vcsUrl          = 'https://github.com/stackmagic/gradle-dropwizard.git'
+		issueTrackerUrl = 'https://github.com/stackmagic/gradle-dropwizard/issues'
+		version {
+			name       = project.version
+			attributes = [
+				'gradle-plugin': 'net.swisstech.elasticdependencies:net.swisstech:gradle-elasticdependencies'
+			]
+		}
+	}
+}
