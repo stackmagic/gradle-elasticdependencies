@@ -28,10 +28,12 @@ dependencies {
 
 // simple smoke test. this should load the local classes as
 // plugin instead of the released version from the repository
-task("smoke_test", dependsOn: 'classes') {
-	check.dependsOn name
+task("smoketest") << {
 	ext.workingDir = project.file("${projectDir}/src/test/resources/MultiProject")
+	println "=" * 79
+	println ">>> launching smoketest subprocess in ${workingDir.absolutePath}"
 	assert 0 == launchAndWait('gradle clean build -si', workingDir)
+	println "=" * 79
 }
 
 // TODO use eclipse-enhancer once it is published
