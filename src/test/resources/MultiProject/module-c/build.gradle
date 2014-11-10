@@ -1,0 +1,7 @@
+
+apply plugin: 'java'
+
+assert dependencies.elastic('module-a'                                ).toString() == "project ':module-a'"
+assert dependencies.elastic('something-external'                      ).toString() == "DefaultExternalModuleDependency{group='MultiProject', name='something-external', version='+', configuration='default'}"
+assert dependencies.elastic('something-external', '1.2.3'             ).toString() == "DefaultExternalModuleDependency{group='MultiProject', name='something-external', version='1.2.3', configuration='default'}"
+assert dependencies.elastic('something-external', '1.2.3', 'org.other').toString() == "DefaultExternalModuleDependency{group='org.other', name='something-external', version='1.2.3', configuration='default'}"

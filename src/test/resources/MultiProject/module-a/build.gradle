@@ -1,0 +1,4 @@
+
+// just an empty project
+
+apply plugin: 'java'

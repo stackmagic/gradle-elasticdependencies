@@ -1,4 +1,6 @@
 
+import static net.swisstech.gradle.dropwizard.ProcessUtil.launchAndWait
+
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'eclipse'
@@ -24,10 +26,13 @@ dependencies {
 	compile 'net.swisstech:swissarmyknife:1.1.1'
 }
 
-// testing
-// DO NOT use testng or else the groovy test cases won't be executed
-// TODO use testng for groovy tests?
-// test.useTestNG()
+// simple smoke test. this should load the local classes as
+// plugin instead of the released version from the repository
+task("smoke_test", dependsOn: 'classes') {
+	check.dependsOn name
+	ext.workingDir = project.file("${projectDir}/src/test/resources/MultiProject")
+	assert 0 == launchAndWait('gradle clean build -si', workingDir)
+}
 
 // TODO use eclipse-enhancer once it is published
 eclipseProject.doLast {
@@ -67,6 +72,9 @@ buildscript {
 	}
 	dependencies {
 		classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:0.6'
+
+		// need the ProcessUtil
+		classpath 'net.swisstech:gradle-dropwizard:+'
 	}
 }
 

@@ -1,0 +1,27 @@
+
+apply plugin: 'java'
+
+// TODO replace with plugin closure
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'net.swisstech:gradle-elasticdependencies:+'
+	}
+}
+
+
+project(':module-c') {
+	apply plugin: 'net.swisstech.elasticdependencies'
+}
+
+project(':module-d') {
+	apply plugin: 'net.swisstech.elasticdependencies'
+
+	assert dependencies.elastic('module-a'                                ).toString() == "project ':module-a'"
+	assert dependencies.elastic('something-external'                      ).toString() == "DefaultExternalModuleDependency{group='MultiProject', name='something-external', version='+', configuration='default'}"
+	assert dependencies.elastic('something-external', '1.2.3'             ).toString() == "DefaultExternalModuleDependency{group='MultiProject', name='something-external', version='1.2.3', configuration='default'}"
+	assert dependencies.elastic('something-external', '1.2.3', 'org.other').toString() == "DefaultExternalModuleDependency{group='org.other', name='something-external', version='1.2.3', configuration='default'}"
+}
+
