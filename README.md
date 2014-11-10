@@ -26,31 +26,10 @@ related work
 
 * [elastic-deps](https://github.com/pniederw/elastic-deps): elastic-deps by Peter Niederwieser
 
-setup (gradle 2.1 or higher)
-============================
+downloading
+===========
 
-```groovy
-plugins {
-  id 'net.swisstech.elasticdependencies'
-}
-```
-
-setup (gradle-1.7 or higher)
-============================
-
-```groovy
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        compile 'net.swisstech:gradle-elasticdependencies:+'
-    }
-}
-
-apply plugin: 'net.swisstech.elasticdependencies'
-```
+this plugin can be downloaded from [plugins.gradle.org](http://plugins.gradle.org/plugin/net.swisstech.elasticdependencies)
 
 usage
 =====
