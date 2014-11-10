@@ -98,6 +98,7 @@ bintray {
 		issueTrackerUrl = "https://github.com/stackmagic/${project.name}/issues"
 		version {
 			name       = project.version
+			desc       = project.description
 			attributes = [
 				'gradle-plugin': "${project.group}.${project.name - 'gradle-'}:${project.group}:${project.name}"
 			]
