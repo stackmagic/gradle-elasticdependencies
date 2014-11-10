@@ -35,7 +35,8 @@ gradle 2.1 or higher
 ```groovy
 plugins {
 	id 'net.swisstech.gradle-elasticdependencies'
-}```
+}
+```
 
 gradle-1.7 or higher
 --------------------
@@ -49,7 +50,8 @@ buildscript {
     dependencies {
         compile 'net.swisstech:gradle-elasticdependencies:+'
     }
-}```
+}
+```
 
 usage
 =====
