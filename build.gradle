@@ -49,6 +49,8 @@ task("smoketest") << {
 	println "=" * 79
 }
 
+tasks['test'].dependsOn('smoketest')
+
 // task to generate wrapper
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.4'
