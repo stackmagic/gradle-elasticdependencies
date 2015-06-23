@@ -1,10 +1,12 @@
 
+import net.swisstech.swissarmyknife.sys.linux.ProcessWrapper
+
 buildscript {
 	repositories {
 		jcenter()
 	}
 	dependencies {
-		classpath 'net.swisstech:gradle-dropwizard:+'
+		classpath 'net.swisstech:swissarmyknife:+'
 	}
 }
 
@@ -43,7 +45,7 @@ task("smoketest") << {
 	ext.workingDir = project.file("${projectDir}/src/test/resources/MultiProject")
 	println "=" * 79
 	println ">>> launching smoketest subprocess in ${workingDir.absolutePath}"
-	assert 0 == net.swisstech.gradle.dropwizard.ProcessUtil.launchAndWait('gradle clean build -si', workingDir)
+	assert 0 == ProcessWrapper.launchWait('gradle clean build -si'.split(' '), workingDir)
 	println "=" * 79
 }
 
